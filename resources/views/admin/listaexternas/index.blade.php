@@ -65,7 +65,7 @@
                                 <td field-key='marca'>{{ $listaexterna->marca->nombre or '' }}</td>
                                 <td field-key='codigo'>{{ $listaexterna->codigo }}</td>
                                 <td field-key='vencimiento'>{{ $listaexterna->vencimiento }}</td>
-                                <td field-key='regisp'>{{ $listaexterna->regisp }}</td>
+                                <td field-key='regisp'><a href="http://registrosanitario.ispch.gob.cl/Ficha.aspx?RegistroISP={{ $listaexterna->regisp }}" target="_blank">{{ $listaexterna->regisp }}</a></td>
                                 <td field-key='preciounidad'>{{ $listaexterna->preciounidad }}</td>
                                 <td field-key='precio_caja'>{{ $listaexterna->precio_caja }}</td>
                                 <td field-key='margen'>{{ $listaexterna->margen }}</td>
