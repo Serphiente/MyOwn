@@ -68,6 +68,9 @@
                 
                 <tbody>
                     @if (count($listaexternas) > 0)
+                    @php 
+                        $contador = 1;
+                    @endphp
                         @foreach ($listaexternas as $listaexterna)
                             <tr data-entry-id="{{ $listaexterna->id }}">
                                 @can('listaexterna_delete')
@@ -94,7 +97,10 @@
                                     <td field-key='margen'>{{ $listaexterna->margen }}</td>
 @endcan
                                 <td field-key='stock'>{{ $listaexterna->stock }}</td>
-                                <td field-key='observaciones'>{!! $listaexterna->observaciones !!}</td>
+                               <!-- <td field-key='observaciones'>{!! $listaexterna->observaciones !!}</td>-->
+                                <td field-key='observaciones'>
+                                    <textarea name="" id="fila{{$contador}}" cols="30" rows="5" style="text-transform: uppercase;">{{ $listaexterna->producto->nombre or '' }}{{"\n"}}Reg ISP {{ $listaexterna->regisp }}{{"\n"}}{{ $listaexterna->marca->nombre or '' }}{{"\n"}}Vencimiento: {{ $listaexterna->vencimiento }}</textarea>
+                                </td>
                                 @can('listaexterna_create')
                                 @if( request('show_deleted') == 1 )
                                 <td>
@@ -137,8 +143,11 @@
                                 </td>
                                 @endif
                                 @endcan
-                                <td><button class="btn btn-primary fa fa-clipboard"></button></td>
+                                <td><button class="btn clipboard btn-primary fa fa-clipboard" data-clipboard-action="copy" data-clipboard-target="#fila{{$contador}}"></button></td>
                             </tr>
+                            @php
+                                $contador++;
+                            @endphp
                         @endforeach
                     @else
                         <tr>

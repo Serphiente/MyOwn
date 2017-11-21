@@ -26,8 +26,7 @@
 <script src="{{ url('adminlte/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ url('adminlte/plugins/fastclick/fastclick.js') }}"></script>
 <script src="{{ url('adminlte/js/app.min.js') }}"></script>
-<script src="{{ url('adminlte/js/clipboard-action.js') }}"></script>
-<script src="{{ url('adminlte/js/clipboard.js') }}"></script>
+<script src="{{ url('adminlte/js/clipboard.min.js') }}"></script>
 
 <script>
     window._token = '{{ csrf_token() }}';
@@ -41,6 +40,17 @@
 
      
 
+</script>
+<script>
+    var clipboard = new Clipboard('.clipboard');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
 </script>
 
  
