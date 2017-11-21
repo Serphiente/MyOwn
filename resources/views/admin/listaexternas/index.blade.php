@@ -34,21 +34,35 @@
                         @endcan
 
                         <th>@lang('quickadmin.listaexterna.fields.producto')</th>
-                        <th>@lang('quickadmin.listaexterna.fields.proveedor')</th>
+                        @can('listaexterna_create')
+                            <th>@lang('quickadmin.listaexterna.fields.proveedor')</th>
+                        @endcan
                         <th>@lang('quickadmin.listaexterna.fields.marca')</th>
-                        <th>@lang('quickadmin.listaexterna.fields.codigo')</th>
+                        @can('listaexterna_create')
+                            <th>@lang('quickadmin.listaexterna.fields.codigo')</th>
+                        @endcan
                         <th>@lang('quickadmin.listaexterna.fields.vencimiento')</th>
                         <th>@lang('quickadmin.listaexterna.fields.regisp')</th>
+                        @can('listaexterna_create')
+                             <th>@lang('quickadmin.listaexterna.fields.preciounidad')</th>
+                             <th>@lang('quickadmin.listaexterna.fields.precio-caja')</th>
+                        @endcan
                         <th>@lang('quickadmin.listaexterna.fields.preciounidad')</th>
                         <th>@lang('quickadmin.listaexterna.fields.precio-caja')</th>
-                        <th>@lang('quickadmin.listaexterna.fields.margen')</th>
+                        @can('listaexterna_create')
+                            <th>@lang('quickadmin.listaexterna.fields.margen')</th>
+                        @endcan
                         <th>@lang('quickadmin.listaexterna.fields.stock')</th>
                         <th>@lang('quickadmin.listaexterna.fields.observaciones')</th>
+                        
+                        @can('listaexterna_create')
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
                         @else
                         <th>&nbsp;</th>
                         @endif
+                        @endcan
+                        <th>copiar</th>
                     </tr>
                 </thead>
                 
@@ -61,16 +75,27 @@
                                 @endcan
 
                                 <td field-key='producto'>{{ $listaexterna->producto->nombre or '' }}</td>
-                                <td field-key='proveedor'>{{ $listaexterna->proveedor->name or '' }}</td>
+@can('listaexterna_delete')
+                                    <td field-key='proveedor'>{{ $listaexterna->proveedor->name or '' }}</td>
+@endcan
                                 <td field-key='marca'>{{ $listaexterna->marca->nombre or '' }}</td>
+                                @can('listaexterna_create')
                                 <td field-key='codigo'>{{ $listaexterna->codigo }}</td>
+                                @endcan 
                                 <td field-key='vencimiento'>{{ $listaexterna->vencimiento }}</td>
                                 <td field-key='regisp'><a href="http://registrosanitario.ispch.gob.cl/Ficha.aspx?RegistroISP={{ $listaexterna->regisp }}" target="_blank">{{ $listaexterna->regisp }}</a></td>
-                                <td field-key='preciounidad'>{{ $listaexterna->preciounidad }}</td>
-                                <td field-key='precio_caja'>{{ $listaexterna->precio_caja }}</td>
-                                <td field-key='margen'>{{ $listaexterna->margen }}</td>
+                                @can('listaexterna_create')
+                                        <td field-key='preciounidad'>{{ $listaexterna->preciounidad }}</td>
+                                        <td field-key='precio_caja'>{{ $listaexterna->precio_caja }}</td>
+                                @endcan
+                                <td field-key='preciounidad'>{{ (($listaexterna->preciounidad * $listaexterna->margen)/100)+$listaexterna->preciounidad}}</td>
+                                <td field-key='precio_caja'>{{ (($listaexterna->precio_caja * $listaexterna->margen)/100)+$listaexterna->precio_caja }}</td>
+                                    @can('listaexterna_delete')
+                                    <td field-key='margen'>{{ $listaexterna->margen }}</td>
+@endcan
                                 <td field-key='stock'>{{ $listaexterna->stock }}</td>
                                 <td field-key='observaciones'>{!! $listaexterna->observaciones !!}</td>
+                                @can('listaexterna_create')
                                 @if( request('show_deleted') == 1 )
                                 <td>
                                     @can('listaexterna_delete')
@@ -111,6 +136,8 @@
                                     @endcan
                                 </td>
                                 @endif
+                                @endcan
+                                <td><button class="btn btn-primary fa fa-clipboard"></button></td>
                             </tr>
                         @endforeach
                     @else
