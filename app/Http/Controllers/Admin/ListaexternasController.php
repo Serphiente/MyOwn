@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Listaexterna;
+use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -30,9 +31,10 @@ class ListaexternasController extends Controller
             $listaexternas = Listaexterna::onlyTrashed()->get();
         } else {
             $listaexternas = Listaexterna::all();
+            $productos = Producto::all();
         }
 
-        return view('admin.listaexternas.index', compact('listaexternas'));
+        return view('admin.listaexternas.index', compact('listaexternas','productos'));
     }
 
     /**

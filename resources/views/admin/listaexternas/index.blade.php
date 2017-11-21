@@ -1,6 +1,5 @@
 @inject('request', 'Illuminate\Http\Request')
 @extends('layouts.app')
-
 @section('content')
     <h3 class="page-title">@lang('quickadmin.listaexterna.title')</h3>
     @can('listaexterna_create')
@@ -34,6 +33,7 @@
                         @endcan
 
                         <th>@lang('quickadmin.listaexterna.fields.producto')</th>
+                        <th>@lang('quickadmin.producto.fields.principio-activo')</th>
                         @can('listaexterna_create')
                             <th>@lang('quickadmin.listaexterna.fields.proveedor')</th>
                         @endcan
@@ -77,11 +77,20 @@
                                     @if ( request('show_deleted') != 1 )<td></td>@endif
                                 @endcan
 
-                                <td field-key='producto'>{{ $listaexterna->producto->nombre or '' }}</td>
+                                <td id="producto{{$contador}}" field-key='producto'>{{ $listaexterna->producto->nombre or '' }}</td>
+                                <td field-key='principio_activo'>
+                                    @foreach ($productos as $producto)
+                                        @if($producto->id == $listaexterna->producto_id)
+                                            @foreach ($producto->principio_activo as $singlePrincipioActivo)
+                                                <span class="label label-info label-many">{{ $singlePrincipioActivo->nombre }}</span>
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                </td>
 @can('listaexterna_delete')
-                                    <td field-key='proveedor'>{{ $listaexterna->proveedor->name or '' }}</td>
+                                    <td id="proveedor{{$contador}}" field-key='proveedor'>{{ $listaexterna->proveedor->name or '' }}</td>
 @endcan
-                                <td field-key='marca'>{{ $listaexterna->marca->nombre or '' }}</td>
+                                <td id="marca{{$contador}}" field-key='marca'>{{ $listaexterna->marca->nombre or '' }}</td>
                                 @can('listaexterna_create')
                                 <td field-key='codigo'>{{ $listaexterna->codigo }}</td>
                                 @endcan 
@@ -144,6 +153,7 @@
                                 @endif
                                 @endcan
                                 <td><button class="btn clipboard btn-primary fa fa-clipboard" data-clipboard-action="copy" data-clipboard-target="#fila{{$contador}}"></button></td>
+                              
                             </tr>
                             @php
                                 $contador++;
