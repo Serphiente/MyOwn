@@ -27,7 +27,7 @@
 <script src="{{ url('adminlte/plugins/fastclick/fastclick.js') }}"></script>
 <script src="{{ url('adminlte/js/app.min.js') }}"></script>
 <script src="{{ url('adminlte/js/clipboard-action.js') }}"></script>
-<script src="{{ url('adminlte/js/clipboard.jss') }}"></script>
+<script src="{{ url('adminlte/js/clipboard.js') }}"></script>
 
 <script>
     window._token = '{{ csrf_token() }}';
